@@ -70,7 +70,10 @@ contract RHBChain {
 	mapping(address => ConsortiumRequest) consortiumRequests;
 
 	event FIRequestVote (
-		address requester
+		address requester, 
+        string name, 
+        string addr,
+        string phone
 	);
 	event NewFI (
 		address approvedFI
@@ -198,7 +201,14 @@ contract RHBChain {
         newFI.addr = addr;
         newFI.phone = phone;
 
-        emit FIRequestVote(msg.sender);
+        emit FIRequestVote(msg.sender, name, addr, phone);
+    }
+
+    function getFIApplicationDetails(address target) public view returns(string memory, string memory, string memory) {
+        FIRequest storage newFI = FIRequests[target];
+        require(newFI.isValid == true);
+
+        return (newFI.name, newFI.addr, newFI.phone);
     }
 
     function voteFIApplication(address target) public isFinancialInstitution {

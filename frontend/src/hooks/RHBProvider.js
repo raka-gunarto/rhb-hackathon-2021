@@ -24,7 +24,7 @@ function useProvideRHBChain() {
   useEffect(() => {
     if (!metaState.isConnected) return;
     if (metaState.account.length == 0) return;
-    const contractAddress = "0x888A25AC09e48CbB29610c7327CABE36237940a8";
+    const contractAddress = "0xb04d3975299B4bb5A892BdA1Cc21282aA2f6C1E7";
     const contractInstance = new metaState.web3.eth.Contract(
       RHBChainMeta.abi,
       contractAddress
@@ -59,6 +59,7 @@ function useProvideRHBChain() {
               name: u[0],
               addr: u[1],
               phone: u[2],
+              isConsortium: u[3],
               type: "FI",
             }));
           })
@@ -68,6 +69,7 @@ function useProvideRHBChain() {
 
   const refresh = () => {
     if (!contract) return;
+    if (user && user.type == "FI") return;
     contract.methods
       .getCreditReportVariables(metaState.account[0])
       .call({ from: metaState.account[0] })
