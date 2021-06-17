@@ -92,7 +92,7 @@ export default function FIDashboardPanel() {
             <Button
               colorScheme="green"
               onClick={() => {
-                newApplicant.vote == "financial application"
+                newApplicant.vote == "financial institution"
                   ? contract.methods
                       .voteFIApplication(newApplicant.requester)
                       .send({ from: metaState.account[0] })

@@ -2,7 +2,7 @@ import React, { useState, useEffect, createContext, useContext } from "react";
 import Web3 from "web3";
 import { useMetamask } from "use-metamask";
 import RHBChainMeta from "../RHBChain.json";
-
+import calculateCreditScore from '../utils/calculateCreditScore'
 export const RHBContext = createContext();
 
 export function RHBProvider({ children }) {
@@ -24,7 +24,7 @@ function useProvideRHBChain() {
   useEffect(() => {
     if (!metaState.isConnected) return;
     if (metaState.account.length == 0) return;
-    const contractAddress = "0xb04d3975299B4bb5A892BdA1Cc21282aA2f6C1E7";
+    const contractAddress = "0xF0F3a5E9320933e1e4F040A36F5A38B1Dc632738";
     const contractInstance = new metaState.web3.eth.Contract(
       RHBChainMeta.abi,
       contractAddress
@@ -73,7 +73,10 @@ function useProvideRHBChain() {
     contract.methods
       .getCreditReportVariables(metaState.account[0])
       .call({ from: metaState.account[0] })
-      .then((result) => setReportVars(result));
+      .then((result) => {
+        const newUser = calculateCreditScore(result) === 1000
+        setReportVars({...result, newUser: newUser})
+      });
   };
 
   useEffect(() => refresh(), [user]);

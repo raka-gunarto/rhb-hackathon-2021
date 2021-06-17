@@ -172,8 +172,8 @@ export default function CreditScorePanel() {
           ) : (
             <Table variant="simple" colorScheme="gray" mt={5}>
               <Thead>
-                <Th color="white">Date Opened</Th>
                 <Th color="white">Inquirer</Th>
+                <Th color="white">Date Opened</Th>
               </Thead>
               <Tbody>{inqs}</Tbody>
             </Table>

@@ -1,4 +1,6 @@
 import {
+  Spinner,
+  VStack,
   Flex,
   FormLabel,
   FormControl,
@@ -9,15 +11,25 @@ import {
   Heading,
   Text,
   HStack,
-  InputLeftAddon,
-  InputGroup,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useRHBChain } from "../hooks/RHBProvider";
 import { useMetamask } from "use-metamask";
+import {Redirect} from 'react-router-dom'
+import Applied from '../pages/Financialnstitution/Applied'
 
 export default function Register() {
   const [customerSignup, setCustomerSignup] = useState(true);
+  const [registering, setRegistering] = useState(false)
+  const { isOpen, onOpen, onClose } = useDisclosure()
   return customerSignup ? (
     <RegisterCustomer setCustomerSignup={setCustomerSignup} />
   ) : (
@@ -26,27 +38,50 @@ export default function Register() {
 }
 
 function RegisterFI({ setCustomerSignup }) {
+  const [applied, setApplied] = useState(false)
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const { connect, metaState } = useMetamask();
-
+  const {isOpen, onClose, onOpen} = useDisclosure()
   const { setUser, contract, refresh } = useRHBChain();
   function handleSubmit() {
+    onOpen()
     contract.methods
       .startFIApplication(name, address, phoneNumber)
       .send({
         from: metaState.account[0],
       })
       .then(() => {
-        alert(
-          "Application received, other FIs will now vote. Check back later"
-        );
+        onClose()
+        setApplied(true)
       })
       .catch((e) => console.log(e));
   }
 
-  return (
+  return applied ? <Applied /> : (
+   <>
+   <Modal isOpen={isOpen} onClose={onClose} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <Heading>Just a moment.</Heading></ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <VStack spacing={8}>
+            <Text>We are processing your submission. This can take up to a minute.</Text>
+            <Spinner 
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"/>
+            </VStack>
+          </ModalBody>
+          <ModalFooter>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     <Flex
       minH={"100vh"}
       align={"center"}
@@ -131,6 +166,7 @@ function RegisterFI({ setCustomerSignup }) {
         </Box>
       </Stack>
     </Flex>
+    </>
   );
 }
 
@@ -142,7 +178,7 @@ function RegisterCustomer({ setCustomerSignup }) {
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const { connect, metaState } = useMetamask();
-
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const { setUser, contract, refresh } = useRHBChain();
   function handleSubmit() {
     console.table({
@@ -153,7 +189,7 @@ function RegisterCustomer({ setCustomerSignup }) {
       dateOfBirth,
       phoneNumber,
     });
-
+    onOpen()
     contract.methods
       .setOwnProfile(
         `${firstName} ${lastName}`,
@@ -166,12 +202,36 @@ function RegisterCustomer({ setCustomerSignup }) {
         from: metaState.account[0],
       })
       .then(() => {
+        onClose()
         refresh();
+        window.location.reload(false)
       })
       .catch((e) => console.log(e));
   }
 
   return (
+    <>
+     <Modal isOpen={isOpen} onClose={onClose} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            <Heading>Just a moment.</Heading></ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <VStack spacing={8}>
+            <Text>We are setting up your profile. This can take up to a minute.</Text>
+            <Spinner 
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"/>
+            </VStack>
+          </ModalBody>
+          <ModalFooter>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     <Flex
       minH={"100vh"}
       align={"center"}
@@ -297,5 +357,6 @@ function RegisterCustomer({ setCustomerSignup }) {
         </Box>
       </Stack>
     </Flex>
+    </>
   );
 }

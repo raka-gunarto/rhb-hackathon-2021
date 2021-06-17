@@ -59,7 +59,7 @@ export default function CreditAccountPanel() {
       });
   }
   const { isOpen, onOpen, onClose } = useDisclosure();
-  
+
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>

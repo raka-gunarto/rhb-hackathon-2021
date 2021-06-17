@@ -95,6 +95,11 @@ export default function CreditInquiryPanel() {
             <Td color="black">
               {new Date(parseInt(acc.dateOpen) * 1000).toDateString()}
             </Td>
+            {acc.dateClosed ? (
+              <Td color="black">
+                {new Date(parseInt(acc.dateOpen) * 1000).toDateString()}
+              </Td>
+            ) : null}
             <Td color="black">{acc.balance}</Td>
             <Td color="black">{acc.terms}</Td>
           </Tr>,
@@ -128,11 +133,12 @@ export default function CreditInquiryPanel() {
             <ModalBody>
               <Text>Credit Inquiry Successful.</Text>
               <Text>Credit Score: {calculateCreditScore(reportVars)}</Text>
-              <Text>Open Accounts</Text>
+              <Text>Accounts</Text>
               <Table variant="simple" colorScheme="gray" mt={5}>
                 <Thead>
                   <Th color="black">Financial Institution</Th>
                   <Th color="black">Date Opened</Th>
+                  <Th color="black">Date Closed</Th>
                   <Th color="black">Amount</Th>
                   <Th color="black">Terms</Th>
                 </Thead>

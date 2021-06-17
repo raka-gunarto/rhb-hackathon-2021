@@ -4,15 +4,18 @@ import Routes from "./components/Routes";
 import { ChakraProvider } from "@chakra-ui/react";
 import { MetamaskStateProvider } from "use-metamask";
 import { RHBProvider } from "./hooks/RHBProvider";
+import { TasksProvider } from "./hooks/TasksProvider";
 function App() {
   return (
-    <MetamaskStateProvider>
-      <RHBProvider>
-        <ChakraProvider>
-          <Routes />
-        </ChakraProvider>
-      </RHBProvider>
-    </MetamaskStateProvider>
+    <TasksProvider>
+      <MetamaskStateProvider>
+        <RHBProvider>
+          <ChakraProvider>
+            <Routes />
+          </ChakraProvider>
+        </RHBProvider>
+      </MetamaskStateProvider>
+    </TasksProvider>
   );
 }
 

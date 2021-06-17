@@ -28,6 +28,20 @@ export default function Navbar() {
           </Heading>
         </Flex>
         <Flex w="100%" height={55} _hover={{ bg: "blue.900" }} align={"center"}>
+          <Link to="/rewards">
+          <Heading ml={50} color={"white"} fontWeight={"thin"} size={"md"}>
+            Rewards
+          </Heading>
+          </Link>
+        </Flex>
+        <Flex w="100%" height={55} _hover={{ bg: "blue.900" }} align={"center"}>
+          <Link to="/tasks">
+          <Heading ml={50} color={"white"} fontWeight={"thin"} size={"md"}>
+            Tasks
+          </Heading>
+          </Link>
+        </Flex>
+        <Flex w="100%" height={55} _hover={{ bg: "blue.900" }} align={"center"}>
           <Heading ml={50} color={"white"} fontWeight={"thin"} size={"md"}>
             Loan Applications
           </Heading>

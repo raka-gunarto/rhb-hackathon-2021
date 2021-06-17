@@ -1,6 +1,6 @@
 import React from "react";
-import { Center, VStack, Heading, Text, Flex } from "@chakra-ui/react";
-
+import { Center, VStack, Heading, Text, Flex, Image} from "@chakra-ui/react";
+import meterIcon from '../assets/meter.png'
 export default function MetricTile(props) {
   return (
     <Flex
@@ -12,6 +12,7 @@ export default function MetricTile(props) {
       bg="gray.900"
     >
       <VStack spacing={5}>
+        <Image src={meterIcon} boxSize="200px" />
         <Heading color={"gray.300"} size={"2xl"} fontWeight="bold">
           {props.stat}
         </Heading>
