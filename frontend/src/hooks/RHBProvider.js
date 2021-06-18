@@ -2,7 +2,7 @@ import React, { useState, useEffect, createContext, useContext } from "react";
 import Web3 from "web3";
 import { useMetamask } from "use-metamask";
 import RHBChainMeta from "../RHBChain.json";
-import calculateCreditScore from '../utils/calculateCreditScore'
+import calculateCreditScore from "../utils/calculateCreditScore";
 export const RHBContext = createContext();
 
 export function RHBProvider({ children }) {
@@ -74,8 +74,14 @@ function useProvideRHBChain() {
       .getCreditReportVariables(metaState.account[0])
       .call({ from: metaState.account[0] })
       .then((result) => {
-        const newUser = calculateCreditScore(result) === 1000
-        setReportVars({...result, newUser: newUser})
+        console.log(metaState.account[0]);
+        const businessUser =
+          metaState.account[0] == "0xafff9e2f5d53c468c312b828f3403bad65e25ce6";
+        const newUser = calculateCreditScore(result) === 1000;
+        const goodUser = calculateCreditScore(result) >= 600;
+        const badUser = calculateCreditScore(result) < 600;
+        console.log({ businessUser, newUser, goodUser, badUser });
+        setReportVars({ ...result, newUser, businessUser, goodUser, badUser });
       });
   };
 

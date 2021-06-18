@@ -13,11 +13,16 @@ import {
   HStack,
   Center,
 } from "@chakra-ui/react";
+import Files from '../assets/folderwithdaclipting.png'
+import Search from '../assets/magnifyingting.png'
+import Upload from '../assets/uploadscreenting.png'
 import { ArrowDownIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import MetricTile from "./MetricTile";
 import { useRHBChain } from "../hooks/RHBProvider";
-
+import ConnectMetamask from '../pages/ConnectMetamask'
+import NewUserDashboard from './NewUserDashboard'
+import OptionsTile from './OptionsTile'
 function calculateCreditScore(reportVars) {
   let score = 1000;
 
@@ -38,7 +43,8 @@ function calculateCreditScore(reportVars) {
 }
 
 function NewUserView({ reportVars, user, refresh }) {
-  return reportVars && user ? (
+
+  return (reportVars && reportVars.newUser && !reportVars.businessUser) ? (<NewUserDashboard />) : reportVars && user ? (
     <Flex direction="column" w="100%">
       <Flex w="100%" mt={100} ml={50}>
         <Flex direction="column" align="left">
@@ -47,7 +53,13 @@ function NewUserView({ reportVars, user, refresh }) {
           </Heading>
           <Heading color="white" size="lg" fontWeight="thin" ml={2} mt={5}>
             {" "}
-            Start exploring ways to build a good credit profile.
+            {reportVars.businessUser
+              ? "Build a reputation, grow your business."
+              : reportVars.newUser
+              ? "Start exploring ways to build a good credit profile"
+              : reportVars.badUser
+              ? "Regain control of your finances, go to Tasks to find out more"
+              : "Make use of your great credit score"}
           </Heading>
         </Flex>
         <Spacer />
@@ -67,6 +79,15 @@ function NewUserView({ reportVars, user, refresh }) {
         >
           Refresh
         </Button>
+      </Flex>
+      <Flex w="100%" align="center" ml={70} mt={"150px"} >
+        <Center w="80%">
+          <HStack spacing={10}>
+            <OptionsTile title="Upload Invoice" image={Upload} />
+            <OptionsTile title="Browse Accounting Data" image={Search}/>
+            <OptionsTile title="Your Applications" image={Files} />
+          </HStack>
+        </Center>
       </Flex>
     </Flex>
   ) : null;
@@ -113,7 +134,7 @@ function ReturningUserView({ reportVars, user, refresh }) {
             <GridItem rowSpan={1} colSpan={1}>
               <MetricTile
                 subtitle="Credit Score"
-                stat={calculateCreditScore(reportVars)}
+                stat={Math.floor(calculateCreditScore(reportVars))}
               />
             </GridItem>
             <GridItem rowSpan={1} colSpan={1}>

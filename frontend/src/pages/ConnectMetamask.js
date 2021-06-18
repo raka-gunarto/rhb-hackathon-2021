@@ -8,6 +8,7 @@ import {
   Checkbox,
   Stack,
   Link,
+  LinkBox,
   Button,
   Heading,
   Text,
@@ -16,7 +17,8 @@ import {
 import React, { useState, useEffect } from "react";
 import Web3 from "web3";
 import { useMetamask } from "use-metamask";
-export default function ConnectMetamask() {
+import {Link as RouterLink} from 'react-router-dom'
+export default function ConnectMetamask(props) {
   const { connect, metaMaskState } = useMetamask();
   const [connecting, setConnecting] = useState(false);
   async function connectMetamaskAccount() {
@@ -38,7 +40,7 @@ export default function ConnectMetamask() {
       align={"center"}
       justify={"center"}
       bg="gray.800"
-      minW={"100vw"}
+      minW={"100%"}
     >
       <Stack
         spacing={1}

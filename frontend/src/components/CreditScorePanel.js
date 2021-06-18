@@ -116,7 +116,7 @@ export default function CreditScorePanel() {
                 Your Credit Score:
               </Heading>
               <Heading fontSize={"144px"} color="white">
-                {calculateCreditScore(reportVars)}
+                {Math.floor(calculateCreditScore(reportVars))}
               </Heading>
             </Flex>
             <Flex

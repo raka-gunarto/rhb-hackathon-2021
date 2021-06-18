@@ -7,6 +7,12 @@ import Tea from '../assets/tea.jpg'
 import Clothes from '../assets/clothes.jpg'
 import Clothes2 from '../assets/clothes2.jpg'
 import Bookstore from '../assets/bookstore.jpg'
+import Reward1 from '../assets/compootahtogetha.jpg'
+import Reward2 from '../assets/koins.jpg'
+import Reward3 from '../assets/oneblokeonphoneandcompootah.jpg'
+import Reward4 from '../assets/pointatthecompootah.jpg'
+import Reward5 from '../assets/twoblokessmilingatcompootah.jpg'
+import Reward6 from '../assets/blokesonatablet.jpg'
 export const TasksContext = createContext();
 export function TasksProvider({ children }) {
   const state = useProvideTasks();
@@ -27,7 +33,7 @@ function useProvideTasks() {
         title: "Getting Started",
         description:
           "Start learning about what credit scores mean, and how they impact your future finances.",
-        xp: 500,
+        xp: 200,
         subtasksLen: 4,
         subtasks: [
           {
@@ -56,8 +62,8 @@ function useProvideTasks() {
         title: "Aim High!",
         description:
           "Make use of your good credit score",
-        xp: 1200,
-        subtasksLen: 1,
+        xp: 2400,
+        subtasksLen: 2,
         subtasks: [
           {
             id: 1,
@@ -72,11 +78,18 @@ function useProvideTasks() {
       },
       {
         id: 2,
-        title: "Good Work!",
-        description: "Keep it up!",
-        xp: 0,
+        title: "Explore horizons",
+        description: "Look through the wide range of financial options banks have to offer",
+        xp: 200,
         subtasks: [],
       },
+        {
+          id: 2,
+          title: "Full Potential",
+          description: "Take your good credit score even higher",
+          xp: 200,
+          subtasks: [],
+        },
     ],
     returningUserBad: [
       {
@@ -125,11 +138,113 @@ function useProvideTasks() {
           },
         ],
       },
+      {
+        id: 2,
+        title: "Expanding your profile",
+        description: "Explore ways to expand your business profile to be eligible for financing",
+        xp: 4000,
+        subtasksLen: 2,
+        subtasks: [
+          {
+            id: 1,
+            content: "Test"
+          },
+          {
+            id: 2,
+            content: "Test"
+          }
+        ]
+      },
+      {
+        id: 3,
+        title: "Uploading documents",
+        description: "See which documents would be most helpful to improve your profile",
+        xp: 4000,
+        subtasksLen: 2,
+        subtasks: [
+          {
+            id: 1,
+            content: "Test"
+          },
+          {
+            id: 2,
+            content: "Test"
+          }
+        ]
+      }
     ],
   };
 
   const rewardsData = {
     newUser: {},
+    businessUser: [
+      {
+        id: 1,
+        title: "BizPower SME Business Loan",
+        redeemed: false,
+        image: Reward1,
+        details: [
+           "Increased collateral options",
+           "7 year financing tenure",
+           "Financing up to RM5 million"
+        ]
+      },
+      {
+        id: 2,
+        title: "BizPlus/-i",
+        redeemed: false,
+        image: Reward2,
+        details: [
+          "7 year financing tenure",
+          "Low interest rates",
+          "High financing potential"
+        ]
+      },
+      {
+        id: 3,
+        title: "BizPower SME Property Loan",
+        redeemed: false,
+        image: Reward3,
+        details: [
+          "Manage unexpected cash flow",
+          "Bigger Returns",
+          "Longer Tenure"
+        ]
+      },
+      {
+        id: 4,
+        title: "Biz-Power Relief Financing",
+        redeemed: false,
+        image: Reward4,
+        details: [
+          "Finance amount up to RM1 million",
+          "No guarantee fee",
+          "High finance rates"
+        ] 
+      },
+      {
+        id: 5,
+        title: "RHB Live FX @ Reflex",
+        redeemed: false,
+        image: Reward5,
+        details: [
+          "Monitor FX Rates in real time",
+          "Book contracts",
+          "Manage settlements"
+        ]
+      },
+      {
+        id: 6,
+        title: "RHB Reflex Premium Plus",
+        redeemed: false,
+        image: Reward6,
+        details: [
+          "RM 50 / month",
+          "Business on one platform",
+          "Real time bank balance"
+        ]
+      }
+    ],
     returningUser: [
       {
         id: 1,

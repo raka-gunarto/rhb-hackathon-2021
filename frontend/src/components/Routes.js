@@ -28,7 +28,7 @@ export default function Routes() {
   if (typeof window.ethereum == "undefined") {
     return <InstallMetamask />;
   } else if (!metaState.isConnected) {
-    return <ConnectMetamask />;
+    return (<ConnectMetamask />);
   } else {
     return user ? (
       <Router>

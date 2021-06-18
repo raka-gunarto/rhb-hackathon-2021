@@ -29,11 +29,13 @@ import {
 } from "@chakra-ui/react";
 import RewardCard from "./RewardCard";
 import { useTasks } from "../hooks/TasksProvider";
+import {useRHBChain} from '../hooks/RHBProvider'
 export default function RewardsPanel() {
   const { rewards, userExperience } = useTasks();
+  const { user, reportVars, refresh } = useRHBChain();
   console.log(rewards);
   console.log({userExperience})
-  return (
+  return reportVars ? (
     <Flex direction="column" w="100%">
       <Flex minW="100%" mt={100} ml={50}>
         <Flex direction="column" align="left">
@@ -42,7 +44,7 @@ export default function RewardsPanel() {
           </Heading>
           <Heading color="white" size="lg" fontWeight="thin" ml={2} mt={5}>
             {" "}
-            Unlock incredible rewards offered by our partners
+            {reportVars.businessUser ? "Unlock our incredible business financing solutions" : "Unlock incredible rewards offered by our partners"}
           </Heading>
         </Flex>
         <Spacer />
@@ -79,7 +81,12 @@ export default function RewardsPanel() {
           templateColumns="repeat(3, 1fr)"
           gap={35}
         >
-          {rewards.returningUser.map((reward, i) => (
+          {reportVars.businessUser ? rewards.businessUser.map((reward, i) => (
+            <GridItem rowSpan={1} colSpan={1}>
+              <RewardCard image={reward.image} title={reward.title} redeemed={reward.redeemed} unlocked={userExperience === 1} details={reward.details}/>
+            </GridItem>
+          )) : 
+          rewards.returningUser.map((reward, i) => (
             <GridItem rowSpan={1} colSpan={1}>
               <RewardCard image={reward.image} title={reward.title} redeemed={reward.redeemed} unlocked={userExperience === 1} details={reward.details}/>
             </GridItem>
@@ -87,5 +94,5 @@ export default function RewardsPanel() {
         </Grid>
       </Flex>
     </Flex>
-  );
+  ) : null;
 }
