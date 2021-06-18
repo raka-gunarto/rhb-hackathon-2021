@@ -28,7 +28,7 @@ import Reward from "react-rewards";
 import { CheckCircleIcon } from "@chakra-ui/icons";
 import TaskCard from "./TaskCard";
 import { useTasks } from "../hooks/TasksProvider";
-export default function TasksPanel() {
+export default function TasksPanel(props) {
   const rewardRef = useRef(null);
   const { tasks, setTasks, setUserExperience } = useTasks();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -37,9 +37,10 @@ export default function TasksPanel() {
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>{tasks.returningUserGood[0].title}</ModalHeader>
+          <ModalHeader>{props.type == "business" ? tasks.businessUser[0].title :tasks.returningUserGood[0].title}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
+            {props.type !== "business" ? 
             <List spacing={3}>
               {tasks.returningUserGood[0].subtasks.map((subtask) => (
                 <ListItem
@@ -68,7 +69,36 @@ export default function TasksPanel() {
                 </ListItem>
               ))}
             </List>
-            <Center hidden={tasks.returningUserGood[0].subtasks.length != 0}>
+            : 
+            <List spacing={3}>
+            {tasks.businessUser[0].subtasks.map((subtask) => (
+              <ListItem
+                cursor="pointer"
+                onClick={() => {
+                  setTasks((old) => {
+                    const newSubtasks = old.businessUser[0].subtasks
+                      .slice()
+                      .filter((task) => task.id !== subtask.id);
+                    const newS = { ...old };
+                    newS.businessUser[0].subtasks = newSubtasks;
+                    return newS;
+                  });
+                  console.log(tasks.businessUser[0].subtasks.length);
+                  if (tasks.businessUser[0].subtasks.length === 0) {
+                    rewardRef.current?.rewardMe();
+                    setUserExperience(
+                      (old) => old + tasks.businessUser[0].xp / 100
+                    );
+                    // onClose()
+                  }
+                }}
+              >
+                <ListIcon as={CheckCircleIcon} color="green.300" />
+                {subtask.content}
+              </ListItem>
+            ))}
+          </List> }
+            <Center hidden={props.type === "business" ? tasks.businessUser[0].subtasks.length != 0 : tasks.returningUserGood[0].subtasks.length != 0}>
               <Reward ref={rewardRef} type={"confetti"}>
                 <CheckCircleIcon color="green.300" w={12} h={12} />
               </Reward>
@@ -98,8 +128,28 @@ export default function TasksPanel() {
             templateRows="repeat(2, 1fr)"
             templateColumns="repeat(3, 1fr)"
             gap={10}
-          >
-            {tasks.returningUserGood.map((task, i) => (
+          > 
+            {props.type === "business" ? tasks.businessUser.map((task, i) => (
+              <GridItem rowSpan={1} colSpan={1}>
+                <TaskCard
+                  title={task.title}
+                  description={task.description}
+                  progress={
+                    i === 0
+                      ? Math.floor(
+                          ((tasks.businessUser[0].subtasksLen -
+                            tasks.businessUser[0].subtasks.length) /
+                            tasks.businessUser[0].subtasksLen) *
+                            100
+                        )
+                      : 100
+                  }
+                  xp={task.xp}
+                  onOpen={onOpen}
+                />
+              </GridItem>
+            )) :
+            tasks.returningUserGood.map((task, i) => (
               <GridItem rowSpan={1} colSpan={1}>
                 <TaskCard
                   title={task.title}

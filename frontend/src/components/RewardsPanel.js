@@ -32,6 +32,7 @@ import { useTasks } from "../hooks/TasksProvider";
 export default function RewardsPanel() {
   const { rewards, userExperience } = useTasks();
   console.log(rewards);
+  console.log({userExperience})
   return (
     <Flex direction="column" w="100%">
       <Flex minW="100%" mt={100} ml={50}>
@@ -80,7 +81,7 @@ export default function RewardsPanel() {
         >
           {rewards.returningUser.map((reward, i) => (
             <GridItem rowSpan={1} colSpan={1}>
-              <RewardCard title={reward.title} redeemed={reward.redeemed} />
+              <RewardCard image={reward.image} title={reward.title} redeemed={reward.redeemed} unlocked={userExperience === 1} details={reward.details}/>
             </GridItem>
           ))}
         </Grid>

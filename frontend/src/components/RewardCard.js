@@ -10,19 +10,20 @@ import {
 	Heading,
 	Image
   } from '@chakra-ui/react';
-  import { CheckIcon } from '@chakra-ui/icons';
+  import { CheckIcon, InfoIcon } from '@chakra-ui/icons';
   
   export default function blogPostWithImage(props) {
 	return (
-	  <Center py={6}>
+	  <Center py={6} minH={"440px"}>
 		<Box
+		  minH={"445px"}
 		  maxW={'500px'}
 		  w={'full'}
 		  bg={"white"}
 		  boxShadow={'2xl'}
 		  rounded={'md'}
 		  overflow={'hidden'}>
-			  <Image src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=4600&q=80" />
+			  <Image src={props.image} />
 		  <Box bg={"gray.50"} px={6} pt={3} py={6}>
 		  <Text
             color={'gray.600'}
@@ -34,30 +35,20 @@ import {
 				{props.title}
           </Text>
 			<List spacing={3}>
+		  {props.details.map((detail) => (
 			  <ListItem>
-				<ListIcon as={CheckIcon} color="green.400" />
-				5.000 page views
+				<ListIcon as={InfoIcon} color="gray.900" />
+				{detail}	
 			  </ListItem>
-			  <ListItem>
-				<ListIcon as={CheckIcon} color="green.400" />
-				50 automation executions
-			  </ListItem>
-			  <ListItem>
-				<ListIcon as={CheckIcon} color="green.400" />
-				50 identified users
-			  </ListItem>
-			  <ListItem>
-				<ListIcon as={CheckIcon} color="green.400" />
-				All features
-			</ListItem>
+		  ))}
 			</List>
 			<Button
 			  mt={10}
 			  w={'full'}
-			  bg={props.redeemed ? 'gray.400' : 'gray.900'}
+			  bg={props.redeemed || props.unlocked ? 'gray.400' : 'gray.900'}
 			  color={'white'}
 			  rounded={'xl'}
-			  _hover={props.redeemed ? null : {
+			  _hover={props.redeemed || props.unlocked ? null : {
 				bg: 'gray.600',
 			  }}
 			  _focus={{
@@ -69,7 +60,7 @@ import {
             fontWeight={800}
             fontSize={'md'}
             letterSpacing={1.1}>
-				{props.redeemed ? "Redeemed" : "Redeem"}
+				{props.unlocked ? "Locked" : props.redeemed ? "Redeemed" : "Redeem"}
           </Text>
 			</Button>
 		  </Box>

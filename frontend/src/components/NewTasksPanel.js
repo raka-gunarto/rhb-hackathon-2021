@@ -32,7 +32,7 @@ import { useTasks } from "../hooks/TasksProvider";
 export default function NewTasksPanel() {
   const rewardRef = useRef(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { tasks, setTasks, experience, setExperience } = useTasks();
+  const { tasks, setTasks, userExperience, setUserExperience } = useTasks();
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
@@ -61,6 +61,9 @@ export default function NewTasksPanel() {
                     console.log(tasks.newUser[0].subtasks.length);
                     if (tasks.newUser[0].subtasks.length === 1) {
                       rewardRef.current?.rewardMe();
+                      setUserExperience(
+                        (old) => old + tasks.newUser[0].xp / 100
+                      );
                     }
                   }}
                 >

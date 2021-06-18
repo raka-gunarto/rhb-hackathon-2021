@@ -13,7 +13,7 @@ export default function Tasks(props) {
         <Navbar></Navbar>
       </Flex>
       <Flex minW={"85vw"} bg={"gray.800"}>
-        {!reportVars.newUser ? <NewTasksPanel /> : <TasksPanel />} 
+        {reportVars.newUser ? <NewTasksPanel /> : <TasksPanel />} 
       </Flex>
     </Flex>
   ) : null;
