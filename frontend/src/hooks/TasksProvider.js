@@ -13,6 +13,7 @@ import Reward3 from '../assets/oneblokeonphoneandcompootah.jpg'
 import Reward4 from '../assets/pointatthecompootah.jpg'
 import Reward5 from '../assets/twoblokessmilingatcompootah.jpg'
 import Reward6 from '../assets/blokesonatablet.jpg'
+import Loan1 from '../assets/loan1.jpg'
 export const TasksContext = createContext();
 export function TasksProvider({ children }) {
   const state = useProvideTasks();
@@ -125,7 +126,7 @@ function useProvideTasks() {
         description:
           "Thinking of applying for a business loan with little history? Show banks how trustworthy you are!",
         subtasksLen: 2,
-        xp: 4200,
+        xp: 200,
         subtasks: [
           {
             id: 1,
@@ -187,18 +188,20 @@ function useProvideTasks() {
            "Increased collateral options",
            "7 year financing tenure",
            "Financing up to RM5 million"
-        ]
+        ],
+        unlocked: true
       },
       {
         id: 2,
         title: "BizPlus/-i",
         redeemed: false,
-        image: Reward2,
+        image: Loan1,
         details: [
           "7 year financing tenure",
           "Low interest rates",
           "High financing potential"
-        ]
+        ],
+        unlocked: true
       },
       {
         id: 3,
@@ -209,7 +212,8 @@ function useProvideTasks() {
           "Manage unexpected cash flow",
           "Bigger Returns",
           "Longer Tenure"
-        ]
+        ],
+        unlocked: false
       },
       {
         id: 4,
@@ -220,7 +224,8 @@ function useProvideTasks() {
           "Finance amount up to RM1 million",
           "No guarantee fee",
           "High finance rates"
-        ] 
+        ],
+        unlocked: false 
       },
       {
         id: 5,
@@ -231,7 +236,8 @@ function useProvideTasks() {
           "Monitor FX Rates in real time",
           "Book contracts",
           "Manage settlements"
-        ]
+        ],
+        unlocked: false
       },
       {
         id: 6,
@@ -242,7 +248,8 @@ function useProvideTasks() {
           "RM 50 / month",
           "Business on one platform",
           "Real time bank balance"
-        ]
+        ],
+        unlocked: false
       }
     ],
     returningUser: [

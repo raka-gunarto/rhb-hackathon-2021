@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   LinkBox,
   LinkOverlay,
@@ -31,6 +31,7 @@ import RewardCard from "./RewardCard";
 import { useTasks } from "../hooks/TasksProvider";
 import {useRHBChain} from '../hooks/RHBProvider'
 export default function RewardsPanel() {
+  const [loaded, setLoaded] = useState(0)
   const { rewards, userExperience } = useTasks();
   const { user, reportVars, refresh } = useRHBChain();
   console.log(rewards);
@@ -83,12 +84,12 @@ export default function RewardsPanel() {
         >
           {reportVars.businessUser ? rewards.businessUser.map((reward, i) => (
             <GridItem rowSpan={1} colSpan={1}>
-              <RewardCard image={reward.image} title={reward.title} redeemed={reward.redeemed} unlocked={userExperience === 1} details={reward.details}/>
+              <RewardCard setLoaded={setLoaded} image={reward.image} apply={true} title={reward.title} redeemed={reward.redeemed} unlocked={reward.unlocked && userExperience !== 1} details={reward.details}/>
             </GridItem>
           )) : 
           rewards.returningUser.map((reward, i) => (
             <GridItem rowSpan={1} colSpan={1}>
-              <RewardCard image={reward.image} title={reward.title} redeemed={reward.redeemed} unlocked={userExperience === 1} details={reward.details}/>
+              <RewardCard image={reward.image} apply={false} title={reward.title} redeemed={reward.redeemed} unlocked={userExperience === 1} details={reward.details}/>
             </GridItem>
           ))}
         </Grid>

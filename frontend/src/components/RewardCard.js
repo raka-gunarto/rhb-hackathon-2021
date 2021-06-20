@@ -14,9 +14,8 @@ import {
   
   export default function blogPostWithImage(props) {
 	return (
-	  <Center py={6} minH={"440px"}>
+	  <Center py={6} minH={"550px"}>
 		<Box
-		  minH={"445px"}
 		  maxW={'500px'}
 		  w={'full'}
 		  bg={"white"}
@@ -45,7 +44,7 @@ import {
 			<Button
 			  mt={10}
 			  w={'full'}
-			  bg={props.redeemed || props.unlocked ? 'gray.400' : 'gray.900'}
+			  bg={props.redeemed || !props.unlocked  ? 'gray.400' : 'gray.900'}
 			  color={'white'}
 			  rounded={'xl'}
 			  _hover={props.redeemed || props.unlocked ? null : {
@@ -60,7 +59,7 @@ import {
             fontWeight={800}
             fontSize={'md'}
             letterSpacing={1.1}>
-				{props.unlocked ? "Locked" : props.redeemed ? "Redeemed" : "Redeem"}
+				{!props.unlocked ? "Locked" : props.apply? "Apply" : props.redeemed ? "Redeemed" : "Redeem"}
           </Text>
 			</Button>
 		  </Box>
